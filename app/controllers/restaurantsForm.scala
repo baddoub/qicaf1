@@ -1,5 +1,5 @@
-package controllers
+//package controllers
 
-case class restaurantsForm(list: List) {
-  
-}
+//case class restaurantsForm(list: List) {
+
+//}
