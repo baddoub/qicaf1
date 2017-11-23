@@ -1,5 +1,30 @@
-@()
-
+@(restaurants: RestaurantList, form: Form[RestaurantForm.RestaurantsData], postUrl: Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 @main("Welcome to qicaf1") {
-  <h1>Welcome to Play!</h1>
+    <h1>Welcome to qicaf1!</h1>
+    @* Global errors are not tied to any particular form field *@
+    @if(form.hasGlobalErrors) {
+        @form.globalErrors.map { error: FormError =>
+            <div>
+                @error.key: @error.message
+            </div>
+        }
+    }
+
+    @helper.form(postUrl) {
+        @helper.CSRF.formField
+        <table>
+            <thead>
+                <tr><th>Food origin</th><th>Name of restaurant</th>
+            </thead>
+            <tbody>
+                <tr><td>@restaurants.rest1</td><td>@helper.inputText(form("rest1"))</td></tr>
+                <tr><td>@restaurants.rest2</td><td>@helper.inputText(form("rest2"))</td></tr>
+                <tr><td>@restaurants.rest3</td><td>@helper.inputText(form("rest3"))</td></tr>
+                <tr><td>@restaurants.rest4</td><td>@helper.inputText(form("rest4"))</td></tr>
+            </tbody>
+        </table>
+
+
+        <button>Choose</button>
+    }
 }
