@@ -14,17 +14,32 @@
         @helper.CSRF.formField
         <table>
             <thead>
-                <tr><th>Food Origin</th><th>Name of Restaurant</th>
+                <th>Food Origin</th><th>Name of Restaurant</th>
             </thead>
             <tbody>
-                <tr><td>@restaurants.rest1</td><td>@helper.inputText(form("ret1"))</td></tr>
-                <tr><td>@restaurants.rest2</td><td>@helper.inputText(form("rest2"))</td></tr>
-                <tr><td>@restaurants.rest3</td><td>@helper.inputText(form("rest3"))</td></tr>
-                <tr><td>@restaurants.rest4</td><td>@helper.inputText(form("rest4"))</td></tr>
+                <tr><td>@helper.inputText(form("rest1"),'id -> "rest1",
+                    'class -> "ui-state-default",
+                    'placeholder -> "Please write name ...",
+                    '_label -> restaurants.rest1)</td></tr>
+                <tr><td>@helper.inputText(form("rest2"),'id -> "rest2",
+                    'class -> "ui-state-default",
+                    'placeholder -> "Please write name ...",
+                    '_label -> restaurants.rest2)</td></tr>
+                <tr><td>@helper.inputText(form("rest3"),'id -> "rest3",
+                    'class -> "ui-state-default",
+                    'placeholder -> "Please write name ...",
+                    '_label -> restaurants.rest3)</td></tr>
+                <tr><td>@helper.inputText(form("rest4"),'id -> "rest4",
+                    'class -> "ui-state-default",
+                    'placeholder -> "Please write name ...",
+                    '_label -> restaurants.rest4)</td></tr>
             </tbody>
         </table>
-
-
         <button>Choose</button>
+    }
+
+    @* Flash shows updates to a page *@
+    @request.flash.data.map{ case (name, value) =>
+    <div class = "ui-state-default">@name: @value</div>
     }
 }
