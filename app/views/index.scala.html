@@ -1,5 +1,6 @@
 @(restaurants: RestaurantList, form: Form[RestaurantForm.RestaurantsData], postUrl: Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 @main("Welcome to qicaf1") {
+<div class="container">
     <h1>Welcome to Qicaf1 !</h1>
     @* Global errors are not tied to any particular form field *@
     @if(form.hasGlobalErrors) {
@@ -12,34 +13,21 @@
 
     @helper.form(postUrl) {
         @helper.CSRF.formField
-        <table>
-            <thead>
-                <th>Food Origin</th><th>Name of Restaurant</th>
-            </thead>
-            <tbody>
-                <tr><td>@helper.inputText(form("rest1"),'id -> "rest1",
-                    'class -> "ui-state-default",
-                    'placeholder -> "Please write name ...",
-                    '_label -> restaurants.rest1)</td></tr>
-                <tr><td>@helper.inputText(form("rest2"),'id -> "rest2",
-                    'class -> "ui-state-default",
-                    'placeholder -> "Please write name ...",
-                    '_label -> restaurants.rest2)</td></tr>
-                <tr><td>@helper.inputText(form("rest3"),'id -> "rest3",
-                    'class -> "ui-state-default",
-                    'placeholder -> "Please write name ...",
-                    '_label -> restaurants.rest3)</td></tr>
-                <tr><td>@helper.inputText(form("rest4"),'id -> "rest4",
-                    'class -> "ui-state-default",
-                    'placeholder -> "Please write name ...",
-                    '_label -> restaurants.rest4)</td></tr>
-            </tbody>
-        </table>
-        <button>Choose</button>
+	<div>
+		<h2>Restaurants</h2>
+		<ul>
+			<li>@helper.inputText(form("rest1"),'id -> "rest1", 'class -> "ui-state-default", 'placeholder -> "Please write name ...", '_label -> restaurants.rest1)</li>
+			<li>@helper.inputText(form("rest2"),'id -> "rest2", 'class -> "ui-state-default", 'placeholder -> "Please write name ...", '_label -> restaurants.rest2)</li>
+			<li>@helper.inputText(form("rest3"),'id -> "rest3", 'class -> "ui-state-default", 'placeholder -> "Please write name ...", '_label -> restaurants.rest3)</li>
+			<li>@helper.inputText(form("rest4"),'id -> "rest4", 'class -> "ui-state-default", 'placeholder -> "Please write name ...", '_label -> restaurants.rest4)</li>
+		</ul>
+		<button>Choose</button>
+	</div>
     }
 
     @* Flash shows updates to a page *@
     @request.flash.data.map{ case (name, value) =>
-    <div class = "ui-state-default">@name: @value</div>
+    <p class = "ui-state-default">@name: @value</p>
     }
+</div>
 }
