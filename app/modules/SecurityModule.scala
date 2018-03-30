@@ -4,6 +4,7 @@ import com.google.inject.{AbstractModule, Provides}
 import org.pac4j.core.client.Clients
 import org.pac4j.core.config.Config
 import org.pac4j.oauth.client.Google2Client
+import org.pac4j.play.http.DefaultHttpActionAdapter
 import org.pac4j.play.scala.{DefaultSecurityComponents, SecurityComponents}
 import org.pac4j.play.store.{PlayCacheSessionStore, PlaySessionStore}
 import org.pac4j.play.{CallbackController, LogoutController}
@@ -29,11 +30,13 @@ class SecurityModule(environment: Environment, configuration: Configuration) ext
     }
 
   @Provides
-  def provideGoogleClient: Google2Client = new Google2Client("", "")
+  def provideGoogleClient: Google2Client = new Google2Client("170127365873-sqatplrvhumem0ce2l448oibs9nbnvek.apps.googleusercontent.com", "AR_TMWzYYIpTnUGDoGL5A2Qw")
 
   @Provides
   def provideConfig(googleClient: Google2Client): Config = {
     val clients = new Clients(baseUrl + "/callback", googleClient)
-    new Config(clients)
+    val config = new Config(clients)
+    config.setHttpActionAdapter(new DefaultHttpActionAdapter)
+    config
   }
 }

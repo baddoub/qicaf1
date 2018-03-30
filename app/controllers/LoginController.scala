@@ -6,7 +6,7 @@ import org.pac4j.core.profile.{CommonProfile, ProfileManager}
 import org.pac4j.play.PlayWebContext
 import org.pac4j.play.scala.{Security, SecurityComponents}
 import org.pac4j.play.store.PlaySessionStore
-import play.api.mvc.{Action, AnyContent, ControllerComponents}
+import play.api.mvc.{Action, AnyContent}
 
 @Singleton
 class LoginController @Inject()(sessionStore: PlaySessionStore, override val controllerComponents: SecurityComponents) extends Security[CommonProfile] {
