@@ -1,6 +1,7 @@
 @(restaurants: Seq[Restaurant], form: Form[RestaurantForm.RestaurantsData], postCall: Call, postAdd : Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 @main("Welcome to qicaf1") {
     <div class="container">
+        <a href="/login">Login</a>
         <h1>Welcome to Qicaf1 !</h1>
         @* Global errors are not tied to any particular form field *@
         @if(form.hasGlobalErrors) {
