@@ -2,8 +2,8 @@ package controllers
 
 import javax.inject._
 
-import models.Restaurant
 import back.repositories.RestaurantRepository
+import models.Restaurant
 import org.pac4j.core.profile.{CommonProfile, ProfileManager}
 import org.pac4j.play.PlayWebContext
 import org.pac4j.play.scala.{Security, SecurityComponents}
@@ -15,17 +15,17 @@ import play.api.mvc._
 import scala.util.Random
 
 @Singleton
-class HomeController @Inject()(sessionStore: PlaySessionStore, override val controllerComponents: SecurityComponents) extends Security[CommonProfile] with I18nSupport {
+class HomeController @Inject()(sessionStore: PlaySessionStore, override val controllerComponents: SecurityComponents, restaurantRepository: RestaurantRepository) extends Security[CommonProfile] with I18nSupport {
   val postCall: _root_.play.api.mvc.Call = routes.HomeController.display()
-  val postAdd : _root_.play.api.mvc.Call = routes.HomeController.add()
+  val postAdd: _root_.play.api.mvc.Call = routes.HomeController.add()
 
   def index: Action[AnyContent] = Secure("Google2Client") { implicit request: Request[AnyContent] =>
-    Ok(views.html.index(RestaurantRepository.fetchRestaurants(getUserId(request)), RestaurantForm.form, postCall, postAdd))
+    Ok(views.html.index(restaurantRepository.fetchRestaurants(getUserId(request)), RestaurantForm.form, postCall, postAdd))
   }
 
   def display: Action[AnyContent] = Secure("Google2Client") { implicit request: Request[AnyContent] =>
     val random = new Random
-    val restaurantsList = RestaurantRepository.fetchRestaurants(getUserId(request))
+    val restaurantsList = restaurantRepository.fetchRestaurants(getUserId(request))
     Redirect(routes.HomeController.index()).flashing("Info" -> "You will eat at : ".concat(restaurantsList(random.nextInt(restaurantsList.length)).name))
   }
 
@@ -36,7 +36,7 @@ class HomeController @Inject()(sessionStore: PlaySessionStore, override val cont
 
     val successFunction = { data: RestaurantForm.RestaurantsData =>
       val restaurant = Restaurant(name = data.name)
-      RestaurantRepository.addRestaurant(getUserId(request), restaurant)
+      restaurantRepository.addRestaurant(getUserId(request), restaurant)
       Redirect(routes.HomeController.index()).flashing("info" -> "Restaurant added!")
     }
 
@@ -46,7 +46,7 @@ class HomeController @Inject()(sessionStore: PlaySessionStore, override val cont
 
   def listRestaurants: Action[AnyContent] = Secure("Google2Client") { implicit request: Request[AnyContent] =>
     // Pass an unpopulated form to the template
-    Ok(views.html.index(RestaurantRepository.fetchRestaurants(getUserId(request)), RestaurantForm.form, postCall, postAdd))
+    Ok(views.html.index(restaurantRepository.fetchRestaurants(getUserId(request)), RestaurantForm.form, postCall, postAdd))
   }
 
   private def getUserId(request: Request[AnyContent]): String = {
