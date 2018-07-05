@@ -12,3 +12,4 @@ sudo -u postgres psql postgres <<EOF
 CREATE ROLE QICAF1 LOGIN;
 CREATE DATABASE QICAF1 WITH OWNER QICAF1;
 EOF
+echo "export DATABASE_URL=postgresql://localhost/qicaf1?user=qicaf1" >> /home/vagrant/.bash_profile
