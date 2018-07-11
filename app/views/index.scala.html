@@ -1,4 +1,4 @@
-@(restaurants: Seq[Restaurant], form: Form[RestaurantForm.RestaurantsData], postCall: Call, postAdd : Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
+@(restaurants: Seq[Restaurant], form: Form[RestaurantForm.RestaurantsData], deleteForm: Form[DeleteRestaurantForm.DeleteRestaurantData], postCall: Call, postAdd : Call, postDelete: Call)(implicit request: RequestHeader, messagesProvider: MessagesProvider)
 @main("Welcome to qicaf1") {
     <div class="container">
         <h1>Welcome to Qicaf1 !</h1>
@@ -11,19 +11,24 @@
             }
         }
 
-        @helper.form(postCall) {
-            @helper.CSRF.formField
-            <div>
-                <h2>Restaurants</h2>
-                @for(w <- restaurants) {
-                    <div>@w.name</div>
+        <div>
+            <h2>Restaurants</h2>
+            @for(w <- restaurants) {
+                <div>@w.name</div>
+                @helper.form(postDelete) {
+                    @helper.CSRF.formField
+                    <input type="hidden" name="id" value='@w.id.get.id' />
+                    <button>Delete</button>
                 }
-                @request.flash.data.map { case (name, value) =>
+            }
+            @request.flash.data.map { case (name, value) =>
                 <p class = "ui-state-default">@name: @value</p>
-                }
+            }
+            @helper.form(postCall) {
+                @helper.CSRF.formField
                 <button>Choose</button>
-            </div>
-        }
+            }
+        </div>
 
         @helper.form(postAdd) {
             @helper.CSRF.formField
