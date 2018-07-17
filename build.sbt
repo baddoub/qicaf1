@@ -1,5 +1,4 @@
 name := """qicaf1"""
-organization := "sfeir"
 
 version := "1.0-SNAPSHOT"
 
