@@ -10,4 +10,4 @@ RUN sbt stage
 
 EXPOSE 80
 
-CMD ["target/universal/stage/bin/qicaf1", "-Dplay.http.secret.key=bliblablooom"]
+CMD ["target/universal/stage/bin/qicaf1", "-Dplay.http.secret.key=bliblablooom", "-Dhttp.port=80"]
